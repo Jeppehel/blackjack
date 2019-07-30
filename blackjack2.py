@@ -1,7 +1,7 @@
 import random
 from createDecks import createDeckss
 
-#the betting functions are defined in this class
+#the betting functions and variables are defined in this class
 class Bets:
     
     def __init__(self):
@@ -21,7 +21,7 @@ def resetHands():
 player = Bets()
 #instance of the deckcreation functionality
 createNewDecks = createDeckss()
-#Player The care taker of amounts of  the bets that is to be made
+#Player The care taker of amounts of  the bets that is to be made in each round of blackjack
 def betInGame(player):
 
     while True:
@@ -34,7 +34,7 @@ def betInGame(player):
             print("You should only enter numbers")   
         else:
             if player.betDollars > player.totalDollars:
-                print("You should have brought more dollars to the table, please try with an amount around what you have: ", player.totalDollars)
+                print("You should have brought more dollars to the table, please try with an amounts equal to what you have: ", player.totalDollars)
             elif player.betDollars <= 0:
                 print("You should enter a positive amount")        
             else:
@@ -42,7 +42,7 @@ def betInGame(player):
 
 gameOnline = True             
 
-#The loop for the blackjack game itself
+#The main loop for the blackjack game itself
 while gameOnline == True:
 
     print("\nWelcome to BlackJack")
@@ -78,6 +78,7 @@ while gameOnline == True:
                 print("The Dealer Wins with blackjack!")   
                 Bets.lose(player)
                 resetHands()
+                break 
             else:   
                 if sum(dealerHand) > sum(playerHand):
                     print("The sum of the dealers hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
@@ -86,10 +87,10 @@ while gameOnline == True:
                     Bets.lose(player)
                     resetHands()
                     break
-                else:
-                    while sum(dealerHand) < 21:
-                        dealerHand.append(random.randint(1, 11))
 
+                else:
+                    while sum(dealerHand) <= 17:
+                        dealerHand.append(random.randint(1, 11))
                         if (sum(dealerHand) > sum(playerHand) and sum(dealerHand) < 21):  
                             print("The sum of the dealers hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
                             print("The sum of your hand is : " + str(sum(playerHand)) + " with ", playerHand)
@@ -97,6 +98,7 @@ while gameOnline == True:
                             Bets.lose(player)
                             resetHands()
                             break
+                        
                         elif sum(dealerHand) == sum(playerHand):   
                             print("The sum of the dealers hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
                             print("The sum of your hand is : "+ str(sum(playerHand)) + " with ", playerHand)
@@ -104,12 +106,20 @@ while gameOnline == True:
                             Bets.win(player)
                             resetHands()
                             break
+                        elif sum(playerHand) > sum(dealerHand) and sum(dealerHand) >= 17:
+                            print("The sum of the dealers hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
+                            print("The sum of your hand is : " + str(sum(playerHand)) + " with ", playerHand)
+                            print("You Win!")
+                            Bets.win(player)
+                            resetHands() 
+                            break 
                         elif sum(dealerHand) == 21:
                             print("The sum of the dealers hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
                             print("The sum of your hand is : " + str(sum(playerHand)) + " with ", playerHand) 
                             print("The Dealer Wins with blackjack!")   
                             Bets.lose(player)
                             resetHands()
+                            break
                         elif sum(dealerHand) > 21:
                             print("The sum of the dealers hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
                             print("The Dealer busted!")
@@ -117,12 +127,12 @@ while gameOnline == True:
                             print("You Win!")
                             Bets.win(player)
                             resetHands()
-                            break    
+                            break   
+                             
                     break
 
                     
-
-
+        
         if sum(playerHand) > 21:
             print("You Busted! the dealer wins.")
             Bets.lose(player)
@@ -160,11 +170,13 @@ while gameOnline == True:
                     print("The sum of the players hand is : " + str(sum(playerHand)) + " with ", playerHand)
                     print("Player got BLACKJACK! Player Wins!")
                     resetHands()
+                    break
                 elif sum(playerHand) > 21:
                     print("The sum of your hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
                     print("The sum of the players hand is : " + str(sum(playerHand)) + " with ", playerHand)
                     print("Player busted! You win")
                     resetHands()
+                    break
             else:  
             
                 if sum(dealerHand) > sum(playerHand):
@@ -190,22 +202,21 @@ while gameOnline == True:
                             print("The sum of your hand is : "  + str(sum(dealerHand)) + " with ", dealerHand)
                             print("The sum of the players hand is : "+ str(sum(playerHand)) + " with ", playerHand)
                             print("Both the dealer and the player wins!")
-
-
-
                             resetHands()
                             break
                         elif sum(dealerHand) == 21:
                             print("The sum of your hand is : "  + str(sum(dealerHand)) + " with ", dealerHand)
                             print("The sum of the players hand is : "+ str(sum(playerHand)) + " with ", playerHand)
-                            print("You, the dealer wins with blackjac!")
+                            print("You, the dealer wins with blackjack!")
                             resetHands()
+                            break
                         elif sum(dealerHand) > 21:
                             print("The sum of your hand is : " + str(sum(dealerHand)) + " with ", dealerHand)
                             print("You, the dealer have busted!")
                             print("The sum of the players hand is : "+ str(sum(playerHand)) + " with ", playerHand)
                             print("The player wins!")
                             resetHands()
+                            break
                         
                     if sum(playerHand) > sum(dealerHand):
                         print("The sum of your hand is :  " + str(sum(dealerHand)) + " with ", dealerHand)
